@@ -9,7 +9,9 @@
  * isStringEmpty(); => throws error "text must be defined"
  */
 function isStringEmpty(text) {
-  // Your code here
+  if (text === undefined) throw new Error('text must be defined');
+
+  return text.trim().length === 0;
 }
 
 /**
@@ -23,7 +25,15 @@ function isStringEmpty(text) {
  * truncateString(''); => throws error "text must have at least one character"
  */
 function truncateString(text, numberOfCharacters) {
-  // Your code here
+  if (text.length === 0){
+    throw new Error('text must have at least one character');
+  }
+
+  if (numberOfCharacters === undefined){
+    throw new Error('Please specify number of characters to extract');
+  }
+
+  return text.substring(0, numberOfCharacters);
 }
 
 /**
@@ -38,7 +48,14 @@ function truncateString(text, numberOfCharacters) {
  * createHashTag('   '); => throws error "Text should have at least three characters"
  */
 function createHashTag(text) {
-  // Your code here
+  if (!text || text.trim().length < 3) {
+    throw new Error('Text should have at least three characters');
+  }
+
+  const words = text.trim().split(/\s+/);
+  const hashtag = words.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('');
+
+  return `#${hashtag}`;
 }
 
 /**
@@ -54,7 +71,24 @@ function createHashTag(text) {
  * formatPhoneNumber(); => throws error "Phone number must be either 9 or 12 characters long"
  */
 function formatPhoneNumber(phoneNumber) {
-  // Your code here
+  if (phoneNumber === undefined) {
+    throw new Error('Phone number must be either 9 or 12 characters long');
+  }
+
+  const phone = phoneNumber.toString();
+
+  if (phone.length !== 9 && phone.length !== 12) {
+    throw new Error("Phone number must be either 9 or 12 characters long");
+  }
+
+  let formattedNumber;
+  if (phone.length === 12) {
+    formattedNumber = `+${phone.slice(0, 3)} ${phoneStr.slice(3, 5)} ${phoneStr.slice(5, 8)} ${phoneStr.slice(8, 10)} ${phoneStr.slice(10)}`
+  } else {
+    formattedNumber = `+998 ${phoneStr.slice(0, 2)} ${phoneStr.slice(2, 5)} ${phoneStr.slice(5, 7)} ${phoneStr.slice(7)}`;
+  }
+
+  return formattedNumber;
 }
 
 /**
@@ -69,7 +103,26 @@ function formatPhoneNumber(phoneNumber) {
  * 
  */
 function changeTextCase(text, caseName) {
-  // Your code here
+  const words = text.trim().split(/\s+/);
+
+  switch (caseName) {
+    case 'camel':
+      return words.map((word, index) => {
+        if (index === 0) {
+          return word.toLowerCase();
+        }
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+      }).join('');
+
+      case 'kebab':
+        return words.map(word => word.toLowerCase()).join('-');
+
+      case 'snake':
+        return words.map(word => word.toLowerCase()).join('_');
+
+      default:
+        throw new Error("Invalid case name. Use 'camel', 'kebab', or 'snake'.");
+  }
 }
 
 /**
@@ -86,7 +139,9 @@ function changeTextCase(text, caseName) {
  * 'Winnie-the-Puff (also known as Edward Bear, Puff Bear or simply Puff) is a fictional anthropomorphic teddy bear created by English author A. A. Milne and English illustrator E. H. Shepard. Winnie-the-Puff first appeared by name in a children's story commissioned by London's Evening News for Christmas Eve 1925. The character is inspired by a stuffed toy that Milne had bought for his son Christopher Robin in Harrods department store, and a bear they had viewed at London Zoo.'
  */
 function replaceWordInText(text, word, replacement) {
-  // Your code here
+  const regex = new RegExp(word, 'gi');
+
+  return text.replace(regex, replacement);
 }
 
 /**
@@ -99,7 +154,15 @@ function replaceWordInText(text, word, replacement) {
  * extractPriceFromText('There were no apples left in the shop'); => 'No matching price was found'
  */
 function extractPriceFromText(text) {
-  // Your code here
+  const priceRegex = /\$([0-9]+(?:\.[0-9]{1,2})?)/;
+
+  const match = text.match(priceRegex);
+
+  if (match) {
+    return parseFloat(match[1]);
+  } else {
+    return 'No matching price was found';
+  }
 }
 
 module.exports = {

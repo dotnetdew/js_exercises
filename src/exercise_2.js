@@ -10,14 +10,15 @@
  * See image here: https://edabit-challenges.s3.amazonaws.com/matchstick_houses.png
  * */
 function countMatchsticksInHouses(step) {
-  // Write your code here
+  if (step === 0) return 0;
+  return 5 * step + 1;
 }
 
  /* The time has a format: hours:minutes. Both hours and minutes have two digits, like 09:00. */
  /* Make a regexp to find time in the string: Breakfast at 09:00 in the room 123:456. */
  /* In this task there’s no need to check time correctness yet, so 25:99 can also be a valid result. */
  /* The regexp should not match 123:456. */
-const TIME_REGEX = /[]//* Write your regex here */
+const TIME_REGEX = /\b\d{2}:\d{2}\b//* Write your regex here */
 
 /**
  * @param {String} text
@@ -33,7 +34,8 @@ const TIME_REGEX = /[]//* Write your regex here */
  * findSecretWord("YFemHUFBbezFBYzFBYLleGBYEFGBMENTment") ➞ "embezzlement"
  * */
 function findSecretWord(text) {
-  // Write your code here
+  const secretWord = text.match(/[a-z]/g).join('');
+  return secretWord;
 }
 
 /**
@@ -66,7 +68,13 @@ class Person {
    * p1.compareAge(p3) ➞ "Lily is the same age as me."
    * */
   compareAge(other) {
-    // Write code here!
+    if (this.age < other.age) {
+      return `${other.name} is older than me.`;
+    } else if (this.age > other.age) {
+      return `${other.name} is younger than me.`;
+    } else {
+      return `${other.name} is the same age as me.`;
+    }
   }
 }
 
@@ -85,7 +93,9 @@ class Person {
  * f3() ➞ ""
  * */
 function redundant(str) {
-  // Write your code here
+  return function() {
+    return str;
+  }
 }
 
 module.exports = {
